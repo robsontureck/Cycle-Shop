@@ -1,2 +1,2 @@
 # Cycle-Shop
-Bike Website using Python, Django, HTML and CSS.
+Bike Website using Python, Django, HTML, CSS and SQL.
