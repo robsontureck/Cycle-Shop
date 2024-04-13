@@ -1,0 +1,32 @@
+.jumbotron {
+    background-image: url('./Resources/images/mountainbike.jpg');
+    background-size: cover;
+    color: black;
+    padding-top: 10em;
+    padding-bottom: 15em;
+}
+
+body {
+    background-color: black;
+}
+
+.card-img-top {
+    width: 100%;
+
+    height: 14vw;
+    object-fit: cover;
+}
+
+.card {
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.card:hover {
+    box-shadow: 5px 6px 6px 2px #e9ecef;
+    transform: scale(1.1);
+}
+
+.checked {
+    color: orange;
+}

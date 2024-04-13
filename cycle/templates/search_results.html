@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block head %}
+  <title>Search Results for </title>
+  <style>
+    .card {
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .card:hover {
+      box-shadow: 5px 6px 6px 2px #e9ecef;
+      transform: scale(1.1);
+    }
+  </style>
+{% endblock %}
+
+{% block main %}
+<div class="container">
+  <div class="row">
+    <!-- column for search reuslts filter-->
+    <div class="col-md-4 my-4">
+      <h4>SHOP BY</h4>
+    <hr/>
+      <h6>Brands</h6>
+      <ul class="list-group my-4">
+        {% for brand in return_brands %}
+        <a href="{{ url_for('main.search', filter= 'brand.' ~ brand[0].id, search = search_term) }}">
+        <li class = "list-group-item d-flex justify-content-between align-items-center">
+          {{brand[0].name}}
+          <span class="badge badge-primary badge-pill">{{brand[1]}}</span>
+        </li>
+        </a>
+        {% endfor %}
+      </ul>
+      <h6>Price</h6>
+      <form class="form-row align-items-center" action = "{{ url_for('main.search', filter='price.0', search = search_term) }}">
+          <div class="col">
+            <input type="text" class="form-control form-control-sm" name="price_from" placeholder="From">
+          </div>
+          <div class="col">
+            <input type="text" class="form-control form-control-sm" name="price_to" placeholder="To">
+          </div>
+          <div class="col">
+        <button class="btn btn-success btn-sm my-2" type="submit">Go</button>
+          </div>
+      </form>
+    </div>
+    
+
+    <!-- column for search results-->
+    <div class="col-md-8 my-4">
+      <div class="card-columns">
+        {% for result in search_results %}
+        <div class="card">
+          <img class="card-img-top"
+            src="{{url_for('static', filename = 'images/' ~ result.id ~ '/' ~ result.images[0].image)}}" alt="Card image cap"
+            style="height:12rem;object-fit:contain;">
+          <div class="card-body text-center">
+            <a href="{{url_for('main.bicycle_detail', bicycle_id = result.id)}}" class="stretched-link">
+              <h5 class="card-title">{{result.Brand.name}} {{result.model}}</h5>
+            </a>
+            <h6 class="text-secondary"><del>{{ "$%.2f"|format(result.price + 1000) }}</del> </h4>
+              <h5 class="text-danger"><small>NOW </small>{{ "$%.2f"|format(result.price) }}</h3>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

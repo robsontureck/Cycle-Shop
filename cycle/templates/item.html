@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<div class="container">
+<div class="row align-items-center">
+  <!-- column containing bike photos, specs-->
+  <div class="col-lg-8 py-3 px-3">
+    <!-- carousel containing bike images-->
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+        {% for image in images %}
+        {% if image == images[0] %}
+        <div class="carousel-item active">
+          <img class="d-block w-100" src="{{url_for('static', filename = 'images/' ~ bike.id ~ '/' + image.image)}}"
+            alt="First slide">
+        </div>
+        {% else %}
+        <div class="carousel-item">
+          <img class="d-block w-100" src="{{url_for('static', filename = 'images/' ~ bike.id ~ '/' + image.image)}}"
+            alt="Second slide">
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </div>
+  <!-- column containing price, add to cart and size options-->
+  <div class="col-lg-4">
+    <div class="row justify-content-start">
+      <img src="{{url_for('static', filename = 'images/' + brand.image)}}" height="75" alt="">
+    </div>
+    <div class="row">
+      <h4 class="display-5 pl-4">{{brand.name}} {{bike.model}}</h4>
+    </div>
+    <!-- jumbotron for bike price-->
+
+    <hr />
+
+    <div class="row align-items-center">
+      <div class="col-sm my-auto">
+        <div class="jumbotron  my-auto py-2 bg-transparent border border-dark" style="min-height:30px;">
+          <div class="row align-items-center">
+            <div class="col order-12">
+              <h3 class="text-danger"><small>NOW </small>${{bike.price}}</h3>
+            </div>
+            <div class="col order-1">
+              <h4 class="text-secondary"><del>${{bike.price + 1000}}</del> </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+      <!-- jumbotron for purchase buttons and forms-->
+      <div class="container">
+        <div class="jumbotron shadow py-4 bg-transparent">
+          <form action="{{ url_for('main.order', bike_id=bike.id) }}" method="POST">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="sizeInput"> Select size</label>
+                <select class="form-control form-control-sm" id="sizeInput">
+                  <option>Large</option>
+                  <option>Medium</option>
+                  <option>Small</option>
+                </select>
+              </div>
+              <div class="form group col-md-6">
+                <label for="quantityInput"> Qty</label>
+                <input type="text" class="form-control form-control-sm" name="quantityInput" id="quantityInput"  placeholder="1">
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-success btn-lg btn-block my-2">Add to Cart</button>
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-8">
+    <hr />
+    <h3 class="font-weight-bold my-3">Overview</h3>
+    <p>{{bike.description}}</p>
+    <hr />
+    <h3 class="font-weight-bold">Specs</h3>
+    <!-- List group to contain specs-->
+  </div>
+</div>
+<div class="row py-3 mb-3">
+  <div class="col-lg-8">
+    <table class="table table-hover">
+      <tbody>
+        <tr>
+          <th scope="row">Frame</th>
+          <td> 100 Series Alpha Aluminium, tapered head tube, internal routing, mudguard mounts, DuoTrap S-compatible,
+            flat-mount disc, 142x12 mm thru axle</td>
+        </tr>
+        <tr>
+          <th scope="row">Fork</th>
+          <td> Domane AL carbon, tapered alloy steerer, internal brake routing, mudguard mounts, flat-mount disc, 12x100
+            mm thru axle</td>
+        </tr>
+        <tr>
+          <th scope="row">Frame fit</th>
+          <td>Endurance</td>
+        </tr>
+        <tr>
+          <th scope="row">Hub front</th>
+          <td> Formula RX-512 alloy, 6-bolt, 100x12 mm thru axle</td>
+        </tr>
+        <tr>
+          <th scope="row">Hub rear</th>
+          <td> Formula RX-142 alloy, 6-bolt, Shimano 11-speed freehub, 142x12 mm thru axle</td>
+        </tr>
+        <tr>
+          <th scope="row">Rim</th>
+          <td>Size: 44, 49, 52, 54, 56, 58, 61
+            Bontrager Affinity Disc, Tubeless Ready, 24-hole, 21 mm width, Presta valve</td>
+        </tr>
+        <tr>
+          <th scope="row">Tyre</th>
+          <td> Bontrager R1 Hard-Case Lite, wire bead, 60 tpi, 700x32 c</td>
+        </tr>
+        <tr>
+          <th scope="row">Shifter</th>
+          <td>Shimano Claris R2000, 8-speed</td>
+        </tr>
+        <tr>
+          <th scope="row">Rear derailleur</th>
+          <td>Shimano Claris R2000, medium cage, 34T max cog</td>
+        </tr>
+        <tr>
+          <th scope="row">Bottom bracket</th>
+          <td> Shimano UN300, 68 mm, threaded cartridge, 110 mm spindle</td>
+        </tr>
+        <tr>
+          <th scope="row">Chain</th>
+          <td>Shimano Sora HG71, 8-speed</td>
+        </tr>
+        <tr>
+          <th scope="row">Saddle</th>
+          <td>Size: 44, 49, 52
+            Bontrager P3 Verse Comp, steel rails, 155 mm width</td>
+        </tr>
+        <tr>
+          <th scope="row">Handlebar</th>
+          <td> Size: 44, 49
+            Bontrager Comp VR-S, alloy, 31.8 mm, 81 mm reach, 118 mm drop, 38 cm width</td>
+        </tr>
+        <tr>
+          <th scope="row">Stem</th>
+          <td>Size: 44
+            Bontrager Elite, 31.8 mm, Blendr-compatible, 7-degree, 70 mm length</td>
+        </tr>
+        <tr>
+          <th scope="row">Brake</th>
+          <td> Tektro C550 mechanical disc brake, dual piston, flat-mount, 160 mm rotor</td>
+        </tr>
+        <tr>
+          <th scope="row">Weight</th>
+          <td>56 - 10.76 kg / 23.73 lbs</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+{% endblock %}

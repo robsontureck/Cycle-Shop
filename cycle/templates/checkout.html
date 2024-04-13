@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block main %}
+<section>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1>Checkout</h1>
+                <p>
+                    Thank you for shopping with us! You will receive an e-mail confirmation for your order shortly.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 text-center"></div>
+            <div class="col-6">
+
+
+                <form method="POST">
+                    {{form.hidden_tag()}}
+                    {{form.firstname.label(class="form-label")}}<br />
+                    {{form.firstname(class="form-control")}}<br />
+                    {{form.surname.label(class="form-label")}}<br />
+                    {{form.surname( class="form-control")}}<br />
+                    {{form.email.label(class="form-label")}}<br />
+                    {{form.email(class="form-control")}}<br />
+                    {{form.phone.label(class="form-label")}}<br />
+                    {{form.phone(class="form-control")}}<br />
+
+                    {{form.submit( class="btn btn-success btn-block")}}<br />
+                </form>
+
+            </div>
+            <div class="col-3 text-center"></div>
+        </div>
+    </div>
+</section>
+{% endblock %}

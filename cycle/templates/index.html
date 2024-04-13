@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>CYCLE - Quality gear...</title>
+<style>
+  .card {
+    transition: all 0.2s ease;
+    border: none;
+  }
+
+  .card:hover {
+    box-shadow: 5px 6px 6px 2px #e9ecef;
+    transform: scale(1.1);
+  }
+</style>
+{% endblock %}
+
+{% block main %}
+<!-- Jumbotron -->
+<div class="jumbotron jumbotron-fluid image"
+  style="background-image: url(static/images/jumbotron_image2.jpg);background-repeat:no-repeat;background-attachment:fixed;background-size: cover;">
+
+  <div class="container">
+    <h1 class="text-light">QUALITY GEAR</h1>
+    <p class="lead text-light">DISCOVER THE LATEST BIKES THIS SEASON</p>
+  </div>
+  <div class="container">
+    <div class="row justify-content-center mt-5 pb-4">
+      <div class="col-md-8">
+        <div class="jumbotron shadow py-4 mb-5 bg-transparent border border-light">
+          <form class="form-inline d-flex flex-nowrap" action="{{url_for('main.search')}}">
+            <input class="form-control flex-grow-1 mr-sm-2" type="search" placeholder="Start your search here..."
+              aria-label="Search" name="search">
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-- trending deals carousel-->
+<div class="container">
+  <hr />
+  <div class="row justify-content-center py-3 mb-3">
+    <h4 class="display-5">TRENDING DEALS</h4>
+  </div>
+  <div class="row justify-content-center py-3 mb-3">
+    <div id="carouselExampleIndicators" class="carousel slide" data-interval="false">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="card-deck">
+            {% for i in range(3) %}
+            <div class="card">
+              <img class="card-img-top"
+                src="{{url_for('static', filename = 'images/' ~ bikes[i].id ~ '/' ~ bikes[i].images[0].image)}}"
+                alt="Card image cap" style="height:12rem;object-fit:contain;">
+              <div class="card-body text-center">
+                <a href="{{url_for('main.bicycle_detail', bicycle_id = bikes[i].id)}}" class="stretched-link">
+                  <h5 class="card-title">{{bikes[i].Brand.name}} {{bikes[i].model}}</h5>
+                </a>
+                <h6 class="text-secondary"><del>{{ "$%.2f"|format(bikes[i].price + 1000) }}</del> </h6>
+                <h5 class="text-danger"><small>NOW </small>{{ "$%.2f"|format(bikes[i].price) }}</h5>
+
+              </div>
+
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="card-deck">
+            {% for i in range(3,6) %}
+            <div class="card">
+              <img class="card-img-top"
+                src="{{url_for('static', filename = 'images/' ~ bikes[i].id ~ '/' ~ bikes[i].images[0].image)}}"
+                alt="Card image cap" style="height:12rem;object-fit:contain;">
+              <div class="card-body text-center">
+                <a href="{{url_for('main.bicycle_detail', bicycle_id = bikes[i].id)}}" class="stretched-link">
+                  <h5 class="card-title">{{bikes[i].Brand.name}} {{bikes[i].model}}</h5>
+                </a>
+                <h6 class="text-secondary"><del>{{ "$%.2f"|format(bikes[i].price + 1000) }}</del> </h4>
+                  <h5 class="text-danger"><small>NOW </small>{{ "$%.2f"|format(bikes[i].price) }}</h3>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <a class="carousel-control-prev" style="bottom:-70%; width:4%;filter:invert(100%);"
+        href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" style="bottom:-70%; width:4%;filter:invert(100%);"
+        href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </div>
+</div>
+<!-- brand cards-->
+<div class="container py-3 mb-3">
+  <hr />
+  <div class="row justify-content-center py-3 mb-3">
+    <h4 class="display-5">BROWSE BY BRAND</h4>
+  </div>
+  <div class="row justify-content-center mx-auto my-auto">
+    {% for i in range(2) %}
+    <div class="col-6 py-3 mx-auto my-auto">
+      <div class="card border-dark mx-auto my-auto">
+        <a href="{{url_for('main.search', search = brands[i].name)}}" class="stretched-link">
+          <img class="card-img-top mx-auto" src="{{url_for('static', filename = 'images/' + brands[i].image)}}"
+            alt="Card image cap" style="width:100%;height:10vh;object-fit:contain;">
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="row mx-auto">
+    {% for i in range(2,4) %}
+    <div class="col-6 py-3 mx-auto my-auto">
+      <div class="card border-dark w-50 mx-auto my-auto">
+        <a href="{{url_for('main.search', search = brands[i].name)}}" class="stretched-link">
+          <img class="card-img-top mx-auto" src="{{url_for('static', filename = 'images/' + brands[i].image)}}"
+            alt="Card image cap" style="width:100%;height:10vh;object-fit:contain;">
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-sm-8 mt-4">
+            <div class="col-md card ">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-sm-6">
+                            <h1>Cart </h1>
+                        </div>
+                        <div class="col-sm-3 text-center">
+                            <h4>Quantity </h4>
+                        </div>
+                        <div class="col-sm-3 text-center">
+                            <h4>Price </h4>
+                        </div>
+                        <div class="col-sm-3">
+                            <h4></h4>
+                        </div>
+                    </div>
+                </div>
+                {% for i in range(order.bicycles|length) %}
+                <div>
+                    <div class="row align-items-center">
+                        <div class="col-sm-3 mt-2 justify-content-center"> <img
+                                src="{{url_for('static', filename='images/' ~ order.bicycles[i].id ~ '/' ~ order.bicycles[i].images[0].image)}}"
+                                class="img-thumbnail" alt="..." style="height:6rem;object-fit:contain;">
+                        </div>
+                        <div class="col-sm-3 mt-5">
+                            <h5>{{order.bicycles[i].Brand.name}} {{order.bicycles[i].model}}</h5>
+                        </div>
+                        <div class="col-sm-3 mt-5 text-center">
+                            <h5 class="mb-2 text-muted">{{ quantities[i] }}</h5>
+                        </div>
+                        <div class="col-sm-3 mt-5 text-center">
+                            <h5 class="mb-2 text-muted">{{ "$%.2f"|format(order.bicycles[i].price) }}</h5>
+                            <form method="POST" action="{{url_for('main.deleteorderitem')}}">
+                                <input type="hidden" id="id" name="id" value="{{order.bicycles[i].id}}">
+                                <input type="submit" value="Delete" class="btn btn-danger btn-lg btn-block my-2">
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+                {% endfor %}
+
+
+            </div>
+
+        </div>
+
+        <div class="col-sm-4 mt-4">
+            <div class="col-md card h-100">
+                <div class="card-header text-center">
+                    <h1>Summary</h1>
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="mt-4">Total Price = {{ "$%.2f"|format(totalprice) }}</h5>
+                    <div class="mt-4">
+                        <a href="{{ url_for('main.deleteorder') }}" class="btn btn-danger btn-lg btn-block my-2">Empty
+                            Basket</a>
+                    </div>
+                    <div class="mt-4">
+                        <a href="{{ url_for('main.checkout') }}" class="btn btn-success btn-lg btn-block my-2">Proceed
+                            to Checkout</a>
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {% endblock %}
